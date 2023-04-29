@@ -1,24 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { useFonts } from "expo-font";
 
-import RegistrationScreen from "./screens/RegistrationScreen.jsx";
-import LoginScreen from "./screens/LoginScreen.jsx";
+import { Provider } from "react-redux";
+
+import { store } from "./src/redux/store";
+import "./src/firebase/config";
+import Main from "./src/components/Main/Main";
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Roboto - regular": require("./assets/fonts/Roboto-Regular.ttf"),
+    "Roboto - medium": require("./assets/fonts/Roboto-Medium.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <RegistrationScreen />
-      {/* <LoginScreen /> */}
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Main />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-});
